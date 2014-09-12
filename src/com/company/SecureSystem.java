@@ -7,6 +7,11 @@ import java.io.IOException;
 public class SecureSystem {
 
     public static void main(String[] args) {
+
+        //
+        SecurityLevel low = SecurityLevel.low;
+        SecurityLevel high = SecurityLevel.high;
+
         BufferedReader reader = null;
 
         try {
