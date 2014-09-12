@@ -9,7 +9,12 @@ public enum SecurityLevel {
     high(2);
 
     public int value;
+
     private SecurityLevel(int value) {
         this.value = value;
+    }
+
+    private boolean dominates(SecurityLevel level){
+        return (this.value >= level.value);
     }
  }
