@@ -6,8 +6,8 @@ package com.company;
 public class Object {
 
     public String name;
-    public int value = 0;
     public SecurityLevel securityLevel;
+    public int value = 0;
 
     public Object(String name, SecurityLevel level){
         this.name = name;

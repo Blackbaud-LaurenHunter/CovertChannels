@@ -15,6 +15,6 @@ public enum SecurityLevel {
     }
 
     private boolean dominates(SecurityLevel level){
-        return (this.value >= level.value);
+        return (value >= level.value);
     }
  }

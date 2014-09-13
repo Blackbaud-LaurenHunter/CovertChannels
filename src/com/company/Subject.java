@@ -6,8 +6,8 @@ package com.company;
 public class Subject {
 
     public String subjectName;
-    public int readValue = 0;
     public SecurityLevel securityLevel;
+    public int readValue = 0;
 
 
     public Subject(String name, SecurityLevel clearanceLevel){
