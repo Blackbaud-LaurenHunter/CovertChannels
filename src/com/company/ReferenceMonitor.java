@@ -23,6 +23,10 @@ public class ReferenceMonitor {
         subjects.put(subject.subjectName, subject);
     }
 
+    public void executeInstruction(InstructionObject instruction){
+
+    }
+
     public void printState(){
         System.out.println("The current state is:");
         printObjectState();
