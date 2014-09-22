@@ -35,13 +35,13 @@ public class BLPSystem {
             String subject = matcher.group(1);
             String object = matcher.group(2);
             int value = Integer.parseInt(matcher.group(3));
-            instructionObject = new InstructionObject(subject, object, value, InstructionType.READ);
+            instructionObject = new InstructionObject(subject, object, value, InstructionType.WRITE);
 
         } else if ((matcher = readPattern.matcher(instruction)).matches() ) {
             System.out.println("Read Instruction");
             String subject = matcher.group(1);
             String object = matcher.group(2);
-            instructionObject = new InstructionObject(subject, object,InstructionType.WRITE);
+            instructionObject = new InstructionObject(subject, object,InstructionType.READ);
         } else {
             System.out.println("Bad Instruction");
             instructionObject = new InstructionObject(InstructionType.BAD);

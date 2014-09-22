@@ -7,6 +7,7 @@ cATS AND dogs, and hampsters
 or elephants
 write Lyle HObj 12
 read Hal HObj 
-read Hal LObj        
+read Hal LObj 
+write Lyle LObj 123        
 write Hal LObj 52
 read Lyle LObj

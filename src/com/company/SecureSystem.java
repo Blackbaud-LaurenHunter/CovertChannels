@@ -20,8 +20,8 @@ public class SecureSystem {
 
         // We add two objects, one high and one low.
 
-        sys.getReferenceMonitor().createNewObject("Lobj", low);
-        sys.getReferenceMonitor().createNewObject("Hobj", high);
+        sys.getReferenceMonitor().createNewObject("LObj", low);
+        sys.getReferenceMonitor().createNewObject("HObj", high);
 
         BufferedReader reader = null;
 
