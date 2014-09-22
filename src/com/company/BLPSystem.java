@@ -25,7 +25,7 @@ public class BLPSystem {
 
     public void runInstruction(String instruction){
         Pattern writePattern = Pattern.compile("^write\\s([a-zA-Z]*)\\s([a-zA-Z]*)\\s(\\d+)", Pattern.CASE_INSENSITIVE);
-        Pattern readPattern = Pattern.compile("^read\\s([a-zA-Z]*)\\s([a-zA-Z]*)$", Pattern.CASE_INSENSITIVE);
+        Pattern readPattern = Pattern.compile("^read\\s([a-zA-Z]*)\\s([a-zA-Z]*)", Pattern.CASE_INSENSITIVE);
         Matcher matcher = writePattern.matcher(instruction);
 
         InstructionObject instructionObject = null;

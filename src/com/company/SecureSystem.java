@@ -15,13 +15,13 @@ public class SecureSystem {
 
         // We add two subjects, one high and one low.
 
-        sys.createSubject("Lyle", low);
-        sys.createSubject("Hal", high);
+        sys.createSubject("lyle", low);
+        sys.createSubject("hal", high);
 
         // We add two objects, one high and one low.
 
-        sys.getReferenceMonitor().createNewObject("LObj", low);
-        sys.getReferenceMonitor().createNewObject("HObj", high);
+        sys.getReferenceMonitor().createNewObject("lobj", low);
+        sys.getReferenceMonitor().createNewObject("hobj", high);
 
         BufferedReader reader = null;
 
@@ -30,6 +30,7 @@ public class SecureSystem {
             String currentInstruction;
             reader = new BufferedReader(new FileReader(args[0]));
             while ((currentInstruction = reader.readLine()) != null) {
+                currentInstruction = currentInstruction.toLowerCase();
                 System.out.println(currentInstruction);
                 sys.runInstruction(currentInstruction);
                 sys.getReferenceMonitor().printState();
