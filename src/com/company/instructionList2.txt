@@ -1,0 +1,11 @@
+write Lyle HObj 15
+read Lyle HObj
+read Lyle LObj
+write Lyle LObj 10
+read Lyle LObj
+cats Lyle HObj
+write Hal LObj 12
+read Hal LObj
+write Hal HObj 200
+read Lyle HObj
+sneaky Lyle LObj 10
