@@ -32,37 +32,46 @@ public class ReferenceMonitor {
         * READ-> set sub value
         * WRITE-> set obj value
         */
+
+        //extract information from instruction
         InstructionType op = instruction.type;
         String subname = instruction.subjectName;
         String objname = instruction.objectName;
         
-        //check is subject/object exists?
-        if(subjects.containsKey(subname) && objectManager.objects.containsKey(objname))
-        {
-            Subject sub = subjects.get(subname);
-            Object obj = objectManager.objects.get(objname);
+        Subject sub = subjects.get(subname);
+        Object obj = objectManager.objects.get(objname);
 
-            SecurityLevel sL = sub.securityLevel;
-            SecurityLevel oL = obj.securityLevel;
+        SecurityLevel sL = sub.securityLevel;
+        SecurityLevel oL = obj.securityLevel;
 
-            switch(op){
-                case READ:
-                    // System.out.print("READ\n");
+        switch(op){
+            case READ:
+                // System.out.print("READ\n");
+                if(subjects.containsKey(subname) && objectManager.objects.containsKey(objname)) {
                     if(sL.dominates(oL)){
                         sub.updateReadValue(obj.value);
-                    }
-                    else sub.readValue = 0;
-                    break;
-                case WRITE:
-                    // System.out.print("WRITE\n");
+                    } else sub.readValue = 0;
+                } break;
+            case WRITE:
+                // System.out.print("WRITE\n");
+                if(subjects.containsKey(subname) && objectManager.objects.containsKey(objname)) {
                     if(oL.dominates(sL)){
                         obj.updateValue(instruction.value);
                     }
-                    break;
-             }
-
+                } break;
+            case CREATE:
+                //check if object exists, if not then create it with the security level of the subject
+                if(!objectManager.objects.containsKey(objname)){
+                    createNewObject(objname, sL);
+                } break;
+            case DESTROY:
+                //check if object exists, if there then destroy it
+                    objectManager.destroyObject(objname);
+                 break;
+            case RUN:
+                //idk what this does...I'll get back to this later
+                break;
         }
-
     }
 
     public void printState(){
@@ -95,6 +104,11 @@ public class ReferenceMonitor {
         public void addObject(String name, SecurityLevel level){
             Object object = new Object(name, level);
             objects.put(object.name, object);
+        }
+
+        public void destroyObject(String name){
+            if(objects.containsKey(name))
+                objects.remove(name);
         }
     }
 }

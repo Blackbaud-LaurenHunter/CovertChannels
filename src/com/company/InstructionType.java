@@ -6,5 +6,8 @@ package com.company;
 public enum InstructionType {
     READ,
     WRITE,
+    CREATE,
+    DESTROY,
+    RUN,
     BAD
 }

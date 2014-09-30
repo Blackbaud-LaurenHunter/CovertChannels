@@ -31,6 +31,7 @@ public class SecureSystem {
             reader = new BufferedReader(new FileReader(args[0]));
             while ((currentInstruction = reader.readLine()) != null) {
                 currentInstruction = currentInstruction.toLowerCase();
+                currentInstruction = currentInstruction.trim();
                 System.out.println(currentInstruction);
                 sys.runInstruction(currentInstruction);
                 sys.getReferenceMonitor().printState();

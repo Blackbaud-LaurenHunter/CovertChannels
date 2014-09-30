@@ -26,6 +26,9 @@ public class BLPSystem {
     public void runInstruction(String instruction){
         Pattern writePattern = Pattern.compile("^write\\s([a-zA-Z]*)\\s([a-zA-Z]*)\\s(\\d+)", Pattern.CASE_INSENSITIVE);
         Pattern readPattern = Pattern.compile("^read\\s([a-zA-Z]*)\\s([a-zA-Z]*)", Pattern.CASE_INSENSITIVE);
+        Pattern createPattern = Pattern.compile("^create\\s([a-zA-Z])\\s([a-zA-Z]*)", Pattern.CASE_INSENSITIVE);
+        Pattern deletePattern = Pattern.compile("^destroy\\s([a-zA-Z])\\s([a-zA-Z]*)", Pattern.CASE_INSENSITIVE);
+        Pattern runPattern = Pattern.compile("^run\\s([a-zA-Z])*", Pattern.CASE_INSENSITIVE);
         Matcher matcher = writePattern.matcher(instruction);
 
         InstructionObject instructionObject = null;
@@ -42,7 +45,22 @@ public class BLPSystem {
             String subject = matcher.group(1);
             String object = matcher.group(2);
             instructionObject = new InstructionObject(subject, object,InstructionType.READ);
-        } else {
+        } else if ((matcher = createPattern.matcher(instruction)).matches() ) {
+            System.out.println("Create Instruction");
+            String subject = matcher.group(1);
+            String object = matcher.group(2);
+            instructionObject = new InstructionObject(subject, object,InstructionType.CREATE);
+        } else if ((matcher = deletePattern.matcher(instruction)).matches() ) {
+            System.out.println("delete Instruction");
+            String subject = matcher.group(1);
+            String object = matcher.group(2);
+            instructionObject = new InstructionObject(subject, object,InstructionType.DESTROY);
+        } else if ((matcher = runPattern.matcher(instruction)).matches() ) {
+            System.out.println("run Instruction");
+            String subject = matcher.group(1);
+            instructionObject = new InstructionObject(subject, null, InstructionType.RUN);
+        }  
+        else {
             System.out.println("Bad Instruction");
             instructionObject = new InstructionObject(InstructionType.BAD);
         }
