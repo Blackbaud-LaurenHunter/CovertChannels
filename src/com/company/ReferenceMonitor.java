@@ -31,46 +31,91 @@ public class ReferenceMonitor {
         *
         * READ-> set sub value
         * WRITE-> set obj value
+        * CREATE-> create object with subject securtiy level
+        * DESTORY-> destroy object
+        * RUN -> wtf?
         */
 
-        //extract information from instruction
         InstructionType op = instruction.type;
-        String subname = instruction.subjectName;
-        String objname = instruction.objectName;
-        
-        Subject sub = subjects.get(subname);
-        Object obj = objectManager.objects.get(objname);
-
-        SecurityLevel sL = sub.securityLevel;
-        SecurityLevel oL = obj.securityLevel;
-
         switch(op){
             case READ:
-                // System.out.print("READ\n");
-                if(subjects.containsKey(subname) && objectManager.objects.containsKey(objname)) {
-                    if(sL.dominates(oL)){
-                        sub.updateReadValue(obj.value);
-                    } else sub.readValue = 0;
-                } break;
+                read(instruction);
+                break;
             case WRITE:
-                // System.out.print("WRITE\n");
-                if(subjects.containsKey(subname) && objectManager.objects.containsKey(objname)) {
-                    if(oL.dominates(sL)){
-                        obj.updateValue(instruction.value);
-                    }
-                } break;
+                write(instruction);
+                break;
             case CREATE:
-                //check if object exists, if not then create it with the security level of the subject
-                if(!objectManager.objects.containsKey(objname)){
-                    createNewObject(objname, sL);
-                } break;
+                create(instruction);
+                break;
             case DESTROY:
-                //check if object exists, if there then destroy it
-                    objectManager.destroyObject(objname);
-                 break;
+                destroy(instruction);
+                break;
             case RUN:
                 //idk what this does...I'll get back to this later
+                run(instruction);
                 break;
+        }
+    }
+
+    public void read(InstructionObject instruction){ 
+        subname = instruction.subjectName;
+        objname = instruction.objectName;
+        if(subjects.containsKey(subname) && objectManager.objects.containsKey(objname)) {
+            sub = subjects.get(subname);
+            obj = objectManager.objects.get(objname);
+            sL = sub.securityLevel;
+            oL = obj.securityLevel;
+            if(sL.dominates(oL)){
+                sub.updateReadValue(obj.value);
+            } else sub.readValue = 0;
+        }
+    }
+
+    public void write(InstructionObject instruction) {
+        subname = instruction.subjectName;
+        objname = instruction.objectName;
+        if(subjects.containsKey(subname) && objectManager.objects.containsKey(objname)) {
+            sub = subjects.get(subname);
+            obj = objectManager.objects.get(objname);
+            sL = sub.securityLevel;
+            oL = obj.securityLevel;
+            if(oL.dominates(sL)){
+                obj.updateValue(instruction.value);
+            }
+        }
+    }
+
+    public void create(InstructionObject instruction) {
+        subname = instruction.subjectName;
+        objname = instruction.objectName;  
+        if(!objectManager.objects.containsKey(objname) && subjects.containsKey(subname)) {
+            sub = subjects.get(subname);
+            sL = sub.securityLevel;
+            createNewObject(objname, sL);
+        }
+    }
+
+    public void destroy(InstructionObject instruction) {
+        subname = instruction.subjectName;
+        objname = instruction.objectName;
+        if(subjects.containsKey(subname) && objectManager.objects.containsKey(objname)) {
+            sub = subjects.get(subname); 
+            obj = objectManager.objects.get(objname);
+            sL = sub.securityLevel;
+            oL = obj.securityLevel;
+            if(oL.dominates(sL)) {
+                objectManager.destroyObject(objname);
+            }
+        }
+    }
+
+    public void run(InstructionObject instruction) {
+        subname = instruction.subjectName;
+        if(subname.equals("lyle")) {
+            //write to "secret file based on reads"
+        }   
+        else if(subname.equals("hal")) {
+            //idk? shouldn't write to anything? 
         }
     }
 
