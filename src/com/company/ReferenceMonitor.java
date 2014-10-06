@@ -58,13 +58,13 @@ public class ReferenceMonitor {
     }
 
     public void read(InstructionObject instruction){ 
-        subname = instruction.subjectName;
-        objname = instruction.objectName;
+        String subname = instruction.subjectName;
+        String objname = instruction.objectName;
         if(subjects.containsKey(subname) && objectManager.objects.containsKey(objname)) {
-            sub = subjects.get(subname);
-            obj = objectManager.objects.get(objname);
-            sL = sub.securityLevel;
-            oL = obj.securityLevel;
+            Subject sub = subjects.get(subname);
+            Object obj = objectManager.objects.get(objname);
+            SecurityLevel sL = sub.securityLevel;
+            SecurityLevel oL = obj.securityLevel;
             if(sL.dominates(oL)){
                 sub.updateReadValue(obj.value);
             } else sub.readValue = 0;
@@ -72,13 +72,13 @@ public class ReferenceMonitor {
     }
 
     public void write(InstructionObject instruction) {
-        subname = instruction.subjectName;
-        objname = instruction.objectName;
+        String subname = instruction.subjectName;
+        String objname = instruction.objectName;
         if(subjects.containsKey(subname) && objectManager.objects.containsKey(objname)) {
-            sub = subjects.get(subname);
-            obj = objectManager.objects.get(objname);
-            sL = sub.securityLevel;
-            oL = obj.securityLevel;
+            Subject sub = subjects.get(subname);
+            Object obj = objectManager.objects.get(objname);
+            SecurityLevel sL = sub.securityLevel;
+            SecurityLevel oL = obj.securityLevel;
             if(oL.dominates(sL)){
                 obj.updateValue(instruction.value);
             }
@@ -86,23 +86,23 @@ public class ReferenceMonitor {
     }
 
     public void create(InstructionObject instruction) {
-        subname = instruction.subjectName;
-        objname = instruction.objectName;  
+        String subname = instruction.subjectName;
+        String objname = instruction.objectName;
         if(!objectManager.objects.containsKey(objname) && subjects.containsKey(subname)) {
-            sub = subjects.get(subname);
-            sL = sub.securityLevel;
+            Subject sub = subjects.get(subname);
+            SecurityLevel sL = sub.securityLevel;
             createNewObject(objname, sL);
         }
     }
 
     public void destroy(InstructionObject instruction) {
-        subname = instruction.subjectName;
-        objname = instruction.objectName;
+        String subname = instruction.subjectName;
+        String objname = instruction.objectName;
         if(subjects.containsKey(subname) && objectManager.objects.containsKey(objname)) {
-            sub = subjects.get(subname); 
-            obj = objectManager.objects.get(objname);
-            sL = sub.securityLevel;
-            oL = obj.securityLevel;
+            Subject sub = subjects.get(subname);
+            Object obj = objectManager.objects.get(objname);
+            SecurityLevel sL = sub.securityLevel;
+            SecurityLevel oL = obj.securityLevel;
             if(oL.dominates(sL)) {
                 objectManager.destroyObject(objname);
             }
@@ -110,7 +110,7 @@ public class ReferenceMonitor {
     }
 
     public void run(InstructionObject instruction) {
-        subname = instruction.subjectName;
+        String subname = instruction.subjectName;
         if(subname.equals("lyle")) {
             //write to "secret file based on reads"
         }   
