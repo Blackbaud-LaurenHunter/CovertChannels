@@ -33,38 +33,32 @@ public class BLPSystem {
 
         InstructionObject instructionObject = null;
 
+
         if (matcher.find()) {
-            System.out.println("write Instruction");
             String subject = matcher.group(1);
             String object = matcher.group(2);
             int value = Integer.parseInt(matcher.group(3));
             instructionObject = new InstructionObject(subject, object, value, InstructionType.WRITE);
 
         } else if ((matcher = readPattern.matcher(instruction)).find() ) {
-            System.out.println("Read Instruction");
             String subject = matcher.group(1);
             String object = matcher.group(2);
             instructionObject = new InstructionObject(subject, object,InstructionType.READ);
         } else if ((matcher = createPattern.matcher(instruction)).find() ) {
-            System.out.println("Create Instruction");
             String subject = matcher.group(1);
             String object = matcher.group(2);
             instructionObject = new InstructionObject(subject, object,InstructionType.CREATE);
         } else if ((matcher = deletePattern.matcher(instruction)).find() ) {
-            System.out.println("destroy Instruction");
             String subject = matcher.group(1);
             String object = matcher.group(2);
             instructionObject = new InstructionObject(subject, object,InstructionType.DESTROY);
         } else if ((matcher = runPattern.matcher(instruction)).find() ) {
-            System.out.println("run Instruction");
             String subject = matcher.group(1);
             instructionObject = new InstructionObject(subject, null, InstructionType.RUN);
-        }  
+        }
         else {
-            System.out.println("Bad Instruction");
             instructionObject = new InstructionObject(InstructionType.BAD);
         }
-
         monitor.executeInstruction(instructionObject);
     }
 

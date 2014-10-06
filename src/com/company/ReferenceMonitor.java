@@ -23,6 +23,8 @@ public class ReferenceMonitor {
         subjects.put(subject.subjectName, subject);
     }
 
+    public Subject getSubject(String name)  { return subjects.get(name); }
+
     public void executeInstruction(InstructionObject instruction){
         /*
         * if security levels are the same, subject may read/write to object
@@ -110,13 +112,8 @@ public class ReferenceMonitor {
     }
 
     public void run(InstructionObject instruction) {
-        String subname = instruction.subjectName;
-        if(subname.equals("lyle")) {
-            //write to "secret file based on reads"
-        }   
-        else if(subname.equals("hal")) {
-            //idk? shouldn't write to anything? 
-        }
+        Subject subject = getSubject(instruction.subjectName);
+        subject.run();
     }
 
     public void printState(){
