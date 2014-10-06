@@ -1,8 +1,14 @@
 package com.company;
 
+import sun.misc.IOUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.BitSet;
 
 public class CovertChannel {
 
@@ -18,24 +24,31 @@ public class CovertChannel {
         sys.createSubject("lyle", low);
         sys.createSubject("hal", high);
 
-        
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String currentInstruction;
-        sys.getReferenceMonitor().printState();
-
         try {
-            System.out.println("give instrucitons now, enter q to quit");
-            while (!(currentInstruction = reader.readLine()).equals("q")) {
-                currentInstruction = currentInstruction.toLowerCase();
-                sys.runInstruction(currentInstruction);
+
+            Path path = Paths.get(args[0]);
+            byte[] bytes = Files.readAllBytes(path);
+            ByteArrayInputStream byteStream = new ByteArrayInputStream(bytes);
+
+
+
+            String currentByte;
+            while (byteStream.available() > 0) {
+                currentByte = String.format("%8s", Integer.toBinaryString(byteStream.read())).replace(' ', '0');
+                System.out.println(currentByte);
+                for (int i = 0; i < currentByte.length(); i++) {
+
+                }
+
+
             }
-            sys.getReferenceMonitor().printState();
+
+
 
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
         }
-
     }
 }
