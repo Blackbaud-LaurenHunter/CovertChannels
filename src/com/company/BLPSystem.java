@@ -1,5 +1,7 @@
 package com.company;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,6 +11,8 @@ import java.util.regex.Pattern;
 public class BLPSystem {
 
     ReferenceMonitor monitor;
+    public static boolean createLog = false;
+    BufferedWriter logWriter;
 
     public BLPSystem(){
         monitor = new ReferenceMonitor();
@@ -60,6 +64,15 @@ public class BLPSystem {
             instructionObject = new InstructionObject(InstructionType.BAD);
         }
         monitor.executeInstruction(instructionObject);
+
+        if (logWriter != null){
+            try {
+                logWriter.write(instruction + "\n");
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
+        }
     }
 
 
